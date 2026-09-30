@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.UIElements;
 
 /*
  * PlayerController is the owner's local input loop: movement, target
@@ -45,13 +47,18 @@ public class PlayerController : NetworkBehaviour
     AxeState _axeState = AxeState.Held;
     LineRenderer _lineRenderer;
 
+    private void Awake()
+    {
+        _lineRenderer = GetComponent<LineRenderer>();
+    }
+
     void Update()
     {
         if (!IsOwner) return;
         
-        /*UpdateMovement();
+        // UpdateMovement();
         UpdateAxeInput();
-        UpdateAimVisual();*/
+        UpdateAimVisual();
 
         Vector2 movementInput = ReadMovementInput();
         _smoothedInput = Vector2.MoveTowards(_smoothedInput, movementInput, Time.deltaTime * 10f);
@@ -65,7 +72,7 @@ public class PlayerController : NetworkBehaviour
 
         UpdateInteractionTarget();
 
-        if (Keyboard.current.eKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)
+        if (Keyboard.current.eKey.wasPressedThisFrame /*|| Mouse.current.leftButton.wasPressedThisFrame*/)
             HandleInteractionPressed();
     }
 
@@ -79,7 +86,8 @@ public class PlayerController : NetworkBehaviour
         Vector3 direction = _characterController.transform.forward;
         _characterController.Move(direction * _smoothedInput.y * _movementSpeed * Time.deltaTime);
         _animator.SetFloat(Speed, _characterController.velocity.magnitude);
-    }
+    }*/
+    
     
     void UpdateAxeInput()
     {
@@ -95,11 +103,14 @@ public class PlayerController : NetworkBehaviour
     
     public void LaunchAxe()
     {
+        Debug.Log("Launching axe");
         if (_axeState != AxeState.Throwing) return;
 
         Vector3 direction = transform.forward;
         direction.y = 0f;
         direction.Normalize();
+
+        NetworkObject axePrefab = NetworkObject.InstantiateAndSpawn(axe.gameObject, NetworkManager, position: transform.position);
         
         axe.Launch(direction, throwImpulse, _characterController);
         _axeState = AxeState.Away;
@@ -171,7 +182,7 @@ public class PlayerController : NetworkBehaviour
         // Changing bowAmount changes the bow.
         // Next: Slice 5.3 in ReturnAxe.
         _lineRenderer.positionCount = 0;
-    }*/
+    }
     
     public override void OnNetworkSpawn()
     {

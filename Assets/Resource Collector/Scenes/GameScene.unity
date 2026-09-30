@@ -1034,6 +1034,7 @@ MonoBehaviour:
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 8cfc14cc87c33734abad2cb10bdbe1ef, type: 2}
+      - {fileID: 11400000, guid: 8cfc14cc87c33734abad2cb10bdbe1ef, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -1296,6 +1297,10 @@ PrefabInstance:
     - target: {fileID: 2130172917350043164, guid: 0f593c205eb9e5a48825e85731d1f215, type: 3}
       propertyPath: _selectionColor.r
       value: 5.3403134
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516417003874187964, guid: 0f593c205eb9e5a48825e85731d1f215, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6516417003874187964, guid: 0f593c205eb9e5a48825e85731d1f215, type: 3}
       propertyPath: GlobalObjectIdHash

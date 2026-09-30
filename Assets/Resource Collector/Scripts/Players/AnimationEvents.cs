@@ -14,7 +14,7 @@ public class AnimationEvents : MonoBehaviour
     
     public void ThrowAction()
     {
-        // playerController.LaunchAxe();
+        playerController.LaunchAxe();
     }
     
     public void ChopAction() { }
